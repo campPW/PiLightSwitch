@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-
+from time import sleep
 
 class Switch:
     
@@ -12,16 +12,17 @@ class Switch:
         GPIO.setwarnings(False)
         GPIO.setup(self.channel, GPIO.OUT)
     
-
     def flipSwitchOn(self):
         GPIO.output(self.channel, True)
+        sleep(2)
 
     def flipSwitchOff(self):
         GPIO.output(self.channel, False)
+        sleep(2)
 
     def getState(self):
         state = GPIO.input(self.channel)
         if state == 1:
             print("The switch is on")
         else:
-            print("The Switch is off")
+            print("The switch is off")
