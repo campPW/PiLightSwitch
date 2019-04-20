@@ -9,23 +9,22 @@ def createSocket():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((SERVER_IP, TCP_PORT))
     s.listen(1)
-    print('Listening...')
     return s
 
-def createConnection(socket):
+def acceptConnection(socket):
     connection, address = socket.accept()
-    print 'The server has been accessed by:', address
+    print 'Server accessed by:', address[0] + " on port " + str(address[1])
     return connection
 
 socket = createSocket()
 switch = Switch(17)
 
 while True:
-    connection = createConnection(socket)
+    print('Waiting for connection...')
+    connection = acceptConnection(socket)
+
     data = connection.recv(1024)
-    print "Receieved Data: "
-    print(data)
-    connection.send(SUCCESS_MSG)
+    print "Receieved Data:", data
 
     if data == "ON":
         switch.flipSwitchOn()
@@ -35,6 +34,8 @@ while True:
         switch.getState()
     else:
         print("Invalid Input")
-    print("Listening...")
 
+    connection.send(SUCCESS_MSG)
+    connection.close()
+    
 
