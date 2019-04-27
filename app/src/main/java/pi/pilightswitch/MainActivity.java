@@ -2,20 +2,11 @@ package pi.pilightswitch;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.graphics.Color;m
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.transition.Fade;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-
-import java.io.IOError;
-import java.io.PrintWriter;
-import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
