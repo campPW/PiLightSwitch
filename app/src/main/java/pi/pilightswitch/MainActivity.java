@@ -13,7 +13,10 @@ import java.net.SocketException;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
+
     private Context context = null;
+    SwitchStateTracker stateTracker = new SwitchStateTracker();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         onButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(stateTracker.getState() == "ON")
+                    return;
                 startConnectToServerTask("ON", fadeIn);
             }
         });
@@ -46,17 +51,22 @@ public class MainActivity extends AppCompatActivity {
         offButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(stateTracker.getState() == "OFF")
+                    return;
                 startConnectToServerTask("OFF", fadeOut);
             }
         });
     }
     private void startConnectToServerTask(String inputToServer, ObjectAnimator fade) {
         ConnectToServerTask ct = (ConnectToServerTask) new  ConnectToServerTask(context).execute(inputToServer);
+
         try {
             String asyncConnectionResult = ct.get();
-            // if exception not caught in ConnectToServerTask, allow fade to occur
-            if (asyncConnectionResult == "")
+            // if exception not caught in ConnectToServerTask, set switch state and start fade animation
+            if (asyncConnectionResult == "") {
+                stateTracker.setState(inputToServer);
                 fade.start();
+            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
