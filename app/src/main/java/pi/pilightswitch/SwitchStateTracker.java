@@ -1,21 +1,21 @@
 package pi.pilightswitch;
 
 public class SwitchStateTracker {
-    int state; // 0 = off, 1 = on
+    String state;
 
     public SwitchStateTracker() {
-        this(0); // default to off
+        this("OFF"); // default to off
     }
-    public SwitchStateTracker(int state) {
+    public SwitchStateTracker(String state) {
         this.setState(state);
     }
-    public void setState(int state) {
-        if(state != 0 || state != 1)
-            throw new IllegalArgumentException();
-        else
+    public void setState(String state) {
+//        if(state != "OFF" || state != "ON")
+//            throw new IllegalArgumentException();
+//        else
             this.state = state;
     }
-    public int getState() {
+    public String getState() {
         return this.state;
     }
 }
